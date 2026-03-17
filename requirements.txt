@@ -13,7 +13,7 @@ pyodbc==5.2.0
 cryptography==3.4.8
 requests==2.22.0
 
-azure-storage-blob==2.1.0
-azure-common==1.1.24
+azure-storage-blob==12.19.0
+
 msal==1.13.0
 msal-extensions==0.3.0
