@@ -12,22 +12,11 @@ class Config(object):
     BLOB_STORAGE_KEY = os.environ.get('BLOB_STORAGE_KEY')
     BLOB_CONTAINER = os.environ.get('BLOB_CONTAINER') or 'images'
 
-    # ---------- Azure SQL Database ----------
-    SQL_SERVER = os.environ.get('SQL_SERVER') or 'cms-sql-server-123.database.windows.net'
-    SQL_DATABASE = os.environ.get('SQL_DATABASE') or 'cms-db'
-    SQL_USER_NAME = os.environ.get('SQL_USER_NAME') or 'cmsadmin'
-    SQL_PASSWORD = os.environ.get('SQL_PASSWORD')
-
-    SQLALCHEMY_DATABASE_URI = (
-        "mssql+pyodbc://"
-        + SQL_USER_NAME + ":" + (SQL_PASSWORD or "")
-        + "@"
-        + SQL_SERVER + ":1433/"
-        + SQL_DATABASE
-        + "?driver=ODBC+Driver+18+for+SQL+Server"
-        + "&Encrypt=yes"
-        + "&TrustServerCertificate=no"
-    )
+    # ---------- DATABASE (SAFE VERSION FOR AZURE) ----------
+    # Use SQLite on cloud to avoid SQL Server driver issues
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        "DATABASE_URL"
+    ) or "sqlite:///site.db"
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -38,4 +27,5 @@ class Config(object):
     REDIRECT_PATH = "/getAToken"
     SCOPE = ["User.Read"]
 
+    # ---------- Session ----------
     SESSION_TYPE = "filesystem"
